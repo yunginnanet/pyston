@@ -38,7 +38,10 @@ ARCH:=$(shell uname -m)
 -include Makefile.local
 
 .PHONY: all
-all: pyston3 pyston$(PYTHON_MAJOR).$(PYTHON_MINOR)
+all: fixllvm pyston3 pyston$(PYTHON_MAJOR).$(PYTHON_MINOR)
+
+fixllvm:
+	cd pyston/llvm && git cherry-pick ff1681d
 
 pyston3: build/opt_env/bin/python
 	ln -sf $< $@
